@@ -1,12 +1,11 @@
 package io.github.kronst.kenv.core
 
 import io.github.kronst.kenv.config.EmptyValueStrategy
-import io.github.kronst.kenv.core.converter.ValueConverter
-import io.github.kronst.kenv.exception.UnsupportedValueTypeException
+import io.github.kronst.kenv.core.converter.CompositeValueConverter
 import kotlin.reflect.KParameter
 
 class ConstructorParameterValueProvider(
-    private val converters: List<ValueConverter>,
+    private val converter: CompositeValueConverter,
     private val emptyValueStrategy: EmptyValueStrategy,
 ) {
 
@@ -31,9 +30,6 @@ class ConstructorParameterValueProvider(
 
             return result
         }
-
-        val converter = converters.find { it.canConvert(type) }
-            ?: throw UnsupportedValueTypeException("No value converter found for type $type")
 
         return converter.convert(value = value, type = type)
     }

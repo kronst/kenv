@@ -2,7 +2,7 @@ package io.github.kronst.kenv.core
 
 import io.github.kronst.kenv.config.EmptyValueStrategy
 import io.github.kronst.kenv.config.KenvConfig
-import io.github.kronst.kenv.exception.UnsupportedValueTypeException
+import io.github.kronst.kenv.exception.MissingConverterImplementationException
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertInstanceOf
 import org.junit.jupiter.api.Assertions.assertNull
@@ -15,11 +15,11 @@ class ConstructorParameterValueProviderTest {
     private val config = KenvConfig()
 
     private val emptyDefaultProvider = ConstructorParameterValueProvider(
-        converters = config.effectiveConverters,
+        converter = config.effectiveConverter,
         emptyValueStrategy = EmptyValueStrategy.DEFAULT,
     )
     private val emptyNullProvider = ConstructorParameterValueProvider(
-        converters = config.effectiveConverters,
+        converter = config.effectiveConverter,
         emptyValueStrategy = EmptyValueStrategy.NULL,
     )
 
@@ -68,11 +68,11 @@ class ConstructorParameterValueProviderTest {
 
         val parameter = Dummy::class.primaryConstructor!!.parameters.first()
 
-        assertThrows<UnsupportedValueTypeException> {
+        assertThrows<MissingConverterImplementationException> {
             emptyDefaultProvider.provide(value = "42", parameter = parameter)
         }
 
-        assertThrows<UnsupportedValueTypeException> {
+        assertThrows<MissingConverterImplementationException> {
             emptyNullProvider.provide(value = "42", parameter = parameter)
         }
     }

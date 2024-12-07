@@ -11,8 +11,4 @@ class StringValueConverter : ValueConverter {
     override fun convert(value: String, type: KType): Any {
         return value
     }
-
-    companion object {
-        val instance = StringValueConverter()
-    }
 }

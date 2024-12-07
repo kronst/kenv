@@ -10,9 +10,11 @@ import kotlin.reflect.full.createType
 class CollectionValueConverterTest {
 
     private val converter = CollectionValueConverter(
-        converters = listOf(
-            StringValueConverter(),
-            PrimitiveValueConverter(),
+        converter = CompositeValueConverter(
+            converters = listOf(
+                StringValueConverter(),
+                PrimitiveValueConverter()
+            )
         ),
         separator = ",",
     )

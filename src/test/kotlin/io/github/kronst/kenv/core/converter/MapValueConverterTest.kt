@@ -7,21 +7,7 @@ import kotlin.reflect.full.createType
 
 class MapValueConverterTest {
 
-    private val converter = MapValueConverter(
-        converters = listOf(
-            PrimitiveValueConverter.instance,
-            StringValueConverter.instance,
-            CollectionValueConverter(
-                listOf(
-                    StringValueConverter.instance,
-                    PrimitiveValueConverter.instance,
-                ),
-                separator = ","
-            )
-        ),
-        itemSeparator = ";",
-        keyValueSeparator = "=",
-    )
+    private val converter = initConverter()
 
     @Test
     fun `converter handles map of string-int pairs`() {
@@ -170,6 +156,26 @@ class MapValueConverterTest {
                 3 to setOf(7, 8, 9)
             ),
             result
+        )
+    }
+
+    private fun initConverter(): MapValueConverter {
+        val baseConverters = listOf(
+            StringValueConverter(),
+            PrimitiveValueConverter(),
+        )
+
+        val baseComposite = CompositeValueConverter(baseConverters)
+
+        val collectionConverter = CollectionValueConverter(
+            converter = baseComposite,
+            separator = ",",
+        )
+
+        return MapValueConverter(
+            converter = CompositeValueConverter(baseConverters + collectionConverter),
+            itemSeparator = ";",
+            keyValueSeparator = "=",
         )
     }
 }

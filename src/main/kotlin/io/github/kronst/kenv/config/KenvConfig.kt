@@ -1,10 +1,8 @@
 package io.github.kronst.kenv.config
 
-import io.github.kronst.kenv.core.converter.CollectionValueConverter
-import io.github.kronst.kenv.core.converter.MapValueConverter
+import io.github.kronst.kenv.core.converter.CompositeValueConverter
 import io.github.kronst.kenv.core.converter.PrimitiveValueConverter
 import io.github.kronst.kenv.core.converter.StringValueConverter
-import io.github.kronst.kenv.core.converter.ValueConverter
 
 /**
  * Configuration for Kenv.
@@ -22,16 +20,16 @@ class KenvConfig(
     val path: String = ".",
     val profile: String? = null,
     val emptyValueStrategy: EmptyValueStrategy = EmptyValueStrategy.DEFAULT,
-    private val collectionItemSeparator: String = ",",
-    private val mapItemSeparator: String = ";",
-    private val mapKeyValueSeparator: String = "=",
-    converters: List<ValueConverter>? = null,
+    private val collectionItemSeparator: String = DEFAULT_COLLECTION_ITEM_SEPARATOR,
+    private val mapItemSeparator: String = DEFAULT_MAP_ITEM_SEPARATOR,
+    private val mapKeyValueSeparator: String = DEFAULT_MAP_KEY_VALUE_SEPARATOR,
+    converter: CompositeValueConverter? = null,
 ) {
 
-    val effectiveConverters: List<ValueConverter>
+    val effectiveConverter: CompositeValueConverter
 
     init {
-        effectiveConverters = converters ?: initDefaultConverters()
+        effectiveConverter = converter ?: initDefaultConverters()
     }
 
     fun getFullEnvFilePath(): String {
@@ -39,33 +37,19 @@ class KenvConfig(
         return "$path/$fileName$profileSuffix".replace("//", "/")
     }
 
-    private fun initDefaultConverters(): List<ValueConverter> {
-        val stringConverter = StringValueConverter.instance
-        val primitiveConverter = PrimitiveValueConverter.instance
+    private fun initDefaultConverters(): CompositeValueConverter {
+        return CompositeValueConverter.Builder()
+            .addBaseConverter(StringValueConverter())
+            .addBaseConverter(PrimitiveValueConverter())
+            .collectionItemSeparator(collectionItemSeparator)
+            .mapItemSeparator(mapItemSeparator)
+            .mapKeyValueSeparator(mapKeyValueSeparator)
+            .build()
+    }
 
-        val collectionConverter = CollectionValueConverter(
-            converters = listOf(
-                stringConverter,
-                primitiveConverter,
-            ),
-            separator = collectionItemSeparator,
-        )
-
-        val mapConverter = MapValueConverter(
-            converters = listOf(
-                stringConverter,
-                primitiveConverter,
-                collectionConverter,
-            ),
-            itemSeparator = mapItemSeparator,
-            keyValueSeparator = mapKeyValueSeparator,
-        )
-
-        return listOf(
-            stringConverter,
-            primitiveConverter,
-            collectionConverter,
-            mapConverter,
-        )
+    companion object {
+        const val DEFAULT_COLLECTION_ITEM_SEPARATOR = ","
+        const val DEFAULT_MAP_ITEM_SEPARATOR = ";"
+        const val DEFAULT_MAP_KEY_VALUE_SEPARATOR = "="
     }
 }

@@ -1,10 +1,9 @@
 package io.github.kronst.kenv.core.converter
 
-import io.github.kronst.kenv.exception.UnsupportedValueTypeException
 import kotlin.reflect.KType
 
 class MapValueConverter(
-    private val converters: List<ValueConverter>,
+    private val converter: CompositeValueConverter,
     private val itemSeparator: String,
     private val keyValueSeparator: String,
 ) : ValueConverter {
@@ -20,12 +19,6 @@ class MapValueConverter(
         val valueType = type.arguments.getOrNull(1)?.type
             ?: throw IllegalArgumentException("Cannot determine value type for map $type")
 
-        val keyConverter = converters.find { it.canConvert(keyType) }
-            ?: throw UnsupportedValueTypeException("No value converter found for key type $keyType")
-
-        val valueConverter = converters.find { it.canConvert(valueType) }
-            ?: throw UnsupportedValueTypeException("No value converter found for value type $valueType")
-
         return value.split(itemSeparator)
             .asSequence()
             .map { it.trim() }
@@ -36,8 +29,9 @@ class MapValueConverter(
                     .takeIf { it.size == 2 }
                     ?: throw IllegalArgumentException("Invalid format: $entry. Expected: key$keyValueSeparator$value")
 
-                val k = keyConverter.convert(value = rawKey, type = keyType)
-                val v = valueConverter.convert(value = rawValue, type = valueType)
+                val k = converter.convert(value = rawKey, type = keyType)
+                val v = converter.convert(value = rawValue, type = valueType)
+
                 k to v
             }
             .toMap()
