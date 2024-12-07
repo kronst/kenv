@@ -75,7 +75,7 @@ class EnvFileReaderTest {
                 
                 # Server configuration
                 SERVER_PORT=8080
-        """.trimIndent()
+            """.trimIndent()
         )
 
         val values = reader.read(file.toString())

@@ -165,7 +165,7 @@ class KenvTest {
 
         data class DatasourceConfig(
             @EnvProperty(key = "DATASOURCE_HOST")
-            val host: String
+            val host: String,
         )
 
         val config = KenvConfig(path = env.parent.toString())
@@ -210,7 +210,7 @@ class KenvTest {
             val host: String,
 
             @EnvProperty(key = "DATASOURCE_PORT", required = true)
-            val port: Int
+            val port: Int,
         )
 
         val config = KenvConfig(path = env.parent.toString())
@@ -234,7 +234,7 @@ class KenvTest {
             val host: String,
 
             @EnvProperty(key = "DATASOURCE_PORT", required = false)
-            val port: Int
+            val port: Int,
         )
 
         val config = KenvConfig(
@@ -266,7 +266,7 @@ class KenvTest {
             val port: Int,
 
             @EnvProperty(key = "DATASOURCE_USER", required = false)
-            val user: String?
+            val user: String?,
         )
 
         val config = KenvConfig(
@@ -299,7 +299,7 @@ class KenvTest {
             val port: Int,
 
             @EnvProperty(key = "DATASOURCE_USER", required = false)
-            val user: String = "postgres"
+            val user: String = "postgres",
         )
 
         val config = KenvConfig(path = env.parent.toString())
@@ -329,7 +329,7 @@ class KenvTest {
             val port: Int,
 
             @EnvProperty(key = "DATASOURCE_USER", required = false)
-            val user: String
+            val user: String,
         )
 
         val config = KenvConfig(
@@ -362,7 +362,7 @@ class KenvTest {
             val port: Int,
 
             @EnvProperty(key = "DATASOURCE_CREDENTIALS")
-            val credentials: Credentials = Credentials()
+            val credentials: Credentials = Credentials(),
         )
 
         val config = KenvConfig(
@@ -400,7 +400,7 @@ class KenvTest {
             val port: Int,
 
             @EnvProperty(key = "DATASOURCE_CREDENTIALS", required = false)
-            val credentials: Credentials? = Credentials()
+            val credentials: Credentials? = Credentials(),
         )
 
         val config = KenvConfig(
@@ -438,7 +438,7 @@ class KenvTest {
             val port: Int,
 
             @EnvProperty(key = "DATASOURCE_CREDENTIALS", required = false)
-            val credentials: Credentials = Credentials()
+            val credentials: Credentials = Credentials(),
         )
 
         val config = KenvConfig(

@@ -1,0 +1,21 @@
+root = true
+
+[*]
+end_of_line = lf
+insert_final_newline = true
+
+[*.{kt,kts}]
+ktlint_code_style=intellij_idea
+ktlint_standard_package-name = disabled
+ktlint_standard_max-line-length = disabled
+ktlint_standard_function-signature = disabled
+ktlint_standard_string-template-indent = disabled
+ktlint_standard_if-else-wrapping = disabled
+ktlint_standard_property-wrapping = disabled
+ktlint_standard_multiline-expression-wrapping = disabled
+ktlint_standard_function-expression-body = disabled
+ktlint_standard_class-signature = disabled
+ktlint_standard_trailing-comma-on-call-site = disabled
+
+[**/build/**]
+ktlint = false

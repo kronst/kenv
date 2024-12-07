@@ -5,7 +5,7 @@ import io.github.kronst.kenv.exception.MissingConverterImplementationException
 import kotlin.reflect.KType
 
 class CompositeValueConverter(
-    private val converters: List<ValueConverter>
+    private val converters: List<ValueConverter>,
 ) : ValueConverter {
 
     override fun canConvert(type: KType): Boolean {
