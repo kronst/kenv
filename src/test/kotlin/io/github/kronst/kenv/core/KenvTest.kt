@@ -16,6 +16,107 @@ import java.nio.file.Path
 class KenvTest {
 
     @Test
+    fun `check config loaded correctly`(@TempDir dir: Path) {
+        val env = dir.resolve(".env")
+        env.toFile().writeText(
+            """
+                BYTE_VALUE=42
+                SHORT_VALUE=42
+                INT_VALUE=42
+                LONG_VALUE=42
+                FLOAT_VALUE=42.0
+                DOUBLE_VALUE=42.0
+                BOOLEAN_VALUE=true
+                CHAR_VALUE=a
+                STRING_VALUE=foo
+                
+                LIST_BYTE=42, 43, 44
+                LIST_SHORT=42, 43, 44
+                LIST_INT=42, 43, 44
+                LIST_LONG=42, 43, 44
+                LIST_FLOAT=42.0, 43.0, 44.0
+                LIST_DOUBLE=42.0, 43.0, 44.0
+                LIST_BOOLEAN=true, false, true
+                LIST_CHAR=a, b, c
+                LIST_STRING=foo, bar, baz
+                
+                SET_BYTE=42, 43, 44, 42
+                SET_SHORT=42, 43, 44, 42
+                SET_INT=42, 43, 44, 42
+                SET_LONG=42, 43, 44, 42
+                SET_FLOAT=42.0, 43.0, 44.0, 42.0
+                SET_DOUBLE=42.0, 43.0, 44.0, 42.0
+                SET_BOOLEAN=true, false, true, true
+                SET_CHAR=a, b, c, a
+                SET_STRING=foo, bar, baz, foo
+            """.trimIndent()
+        )
+
+        @EnvConfiguration
+        class Config(
+            @EnvProperty(key = "BYTE_VALUE") val byteValue: Byte,
+            @EnvProperty(key = "SHORT_VALUE") val shortValue: Short,
+            @EnvProperty(key = "INT_VALUE") val intValue: Int,
+            @EnvProperty(key = "LONG_VALUE") val longValue: Long,
+            @EnvProperty(key = "FLOAT_VALUE") val floatValue: Float,
+            @EnvProperty(key = "DOUBLE_VALUE") val doubleValue: Double,
+            @EnvProperty(key = "BOOLEAN_VALUE") val booleanValue: Boolean,
+            @EnvProperty(key = "CHAR_VALUE") val charValue: Char,
+            @EnvProperty(key = "STRING_VALUE") val stringValue: String,
+            @EnvProperty(key = "LIST_BYTE") val listByte: List<Byte>,
+            @EnvProperty(key = "LIST_SHORT") val listShort: List<Short>,
+            @EnvProperty(key = "LIST_INT") val listInt: List<Int>,
+            @EnvProperty(key = "LIST_LONG") val listLong: List<Long>,
+            @EnvProperty(key = "LIST_FLOAT") val listFloat: List<Float>,
+            @EnvProperty(key = "LIST_DOUBLE") val listDouble: List<Double>,
+            @EnvProperty(key = "LIST_BOOLEAN") val listBoolean: List<Boolean>,
+            @EnvProperty(key = "LIST_CHAR") val listChar: List<Char>,
+            @EnvProperty(key = "LIST_STRING") val listString: List<String>,
+            @EnvProperty(key = "SET_BYTE") val setByte: Set<Byte>,
+            @EnvProperty(key = "SET_SHORT") val setShort: Set<Short>,
+            @EnvProperty(key = "SET_INT") val setInt: Set<Int>,
+            @EnvProperty(key = "SET_LONG") val setLong: Set<Long>,
+            @EnvProperty(key = "SET_FLOAT") val setFloat: Set<Float>,
+            @EnvProperty(key = "SET_DOUBLE") val setDouble: Set<Double>,
+            @EnvProperty(key = "SET_BOOLEAN") val setBoolean: Set<Boolean>,
+            @EnvProperty(key = "SET_CHAR") val setChar: Set<Char>,
+            @EnvProperty(key = "SET_STRING") val setString: Set<String>,
+        )
+
+        val config = Kenv.load<Config>(KenvConfig(path = env.parent.toString()))
+
+        assertEquals(42.toByte(), config.byteValue)
+        assertEquals(42.toShort(), config.shortValue)
+        assertEquals(42, config.intValue)
+        assertEquals(42L, config.longValue)
+        assertEquals(42.0f, config.floatValue)
+        assertEquals(42.0, config.doubleValue)
+        assertEquals(true, config.booleanValue)
+        assertEquals('a', config.charValue)
+        assertEquals("foo", config.stringValue)
+
+        assertEquals(listOf<Byte>(42, 43, 44), config.listByte)
+        assertEquals(listOf<Short>(42, 43, 44), config.listShort)
+        assertEquals(listOf(42, 43, 44), config.listInt)
+        assertEquals(listOf(42L, 43L, 44L), config.listLong)
+        assertEquals(listOf(42.0f, 43.0f, 44.0f), config.listFloat)
+        assertEquals(listOf(42.0, 43.0, 44.0), config.listDouble)
+        assertEquals(listOf(true, false, true), config.listBoolean)
+        assertEquals(listOf('a', 'b', 'c'), config.listChar)
+        assertEquals(listOf("foo", "bar", "baz"), config.listString)
+
+        assertEquals(setOf<Byte>(42, 43, 44), config.setByte)
+        assertEquals(setOf<Short>(42, 43, 44), config.setShort)
+        assertEquals(setOf(42, 43, 44), config.setInt)
+        assertEquals(setOf(42L, 43L, 44L), config.setLong)
+        assertEquals(setOf(42.0f, 43.0f, 44.0f), config.setFloat)
+        assertEquals(setOf(42.0, 43.0, 44.0), config.setDouble)
+        assertEquals(setOf(true, false), config.setBoolean)
+        assertEquals(setOf('a', 'b', 'c'), config.setChar)
+        assertEquals(setOf("foo", "bar", "baz"), config.setString)
+    }
+
+    @Test
     fun `when config class not annotated with EnvConfiguration then throw exception`(@TempDir dir: Path) {
         val env = dir.resolve(".env")
         env.toFile().writeText("DATASOURCE_HOST=localhost")

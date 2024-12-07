@@ -12,12 +12,14 @@ import kotlin.reflect.full.primaryConstructor
 
 class ConstructorParameterValueProviderTest {
 
+    private val config = KenvConfig()
+
     private val emptyDefaultProvider = ConstructorParameterValueProvider(
-        converters = KenvConfig.DEFAULT_VALUE_CONVERTERS,
+        converters = config.effectiveConverters,
         emptyValueStrategy = EmptyValueStrategy.DEFAULT,
     )
     private val emptyNullProvider = ConstructorParameterValueProvider(
-        converters = KenvConfig.DEFAULT_VALUE_CONVERTERS,
+        converters = config.effectiveConverters,
         emptyValueStrategy = EmptyValueStrategy.NULL,
     )
 

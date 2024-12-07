@@ -6,19 +6,12 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import kotlin.reflect.full.createType
 
-class ValueConverterTest {
+class PrimitiveValueConverterTest {
+
+    private val converter = PrimitiveValueConverter()
 
     @Test
-    fun `string converter handles string values`() {
-        val converter = StringValueConverter()
-
-        assertEquals("localhost", converter.convert("localhost", String::class.createType()))
-    }
-
-    @Test
-    fun `primitive converter handles all basic values`() {
-        val converter = PrimitiveValueConverter()
-
+    fun `converter handles all basic values`() {
         assertEquals(42.toByte(), converter.convert("42", Byte::class.createType()))
         assertEquals(42.toShort(), converter.convert("42", Short::class.createType()))
         assertEquals(42, converter.convert("42", Int::class.createType()))
@@ -30,9 +23,7 @@ class ValueConverterTest {
     }
 
     @Test
-    fun `when unknown type then primitive converter throws exception`() {
-        val converter = PrimitiveValueConverter()
-
+    fun `when unknown type then converter throws exception`() {
         assertThrows<MissingConverterImplementationException> { converter.convert("42", String::class.createType()) }
     }
 }

@@ -38,7 +38,7 @@ object KenvLoader {
             .associateBy { it.name }
 
         val valueProvider = ConstructorParameterValueProvider(
-            converters = config.converters,
+            converters = config.effectiveConverters,
             emptyValueStrategy = config.emptyValueStrategy,
         )
 
