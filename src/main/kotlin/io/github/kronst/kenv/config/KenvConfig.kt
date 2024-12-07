@@ -17,15 +17,15 @@ import io.github.kronst.kenv.core.converter.ValueConverter
  * @property mapItemSeparator The separator for map entries when converting Map types
  * @property mapKeyValueSeparator The separator for map key-value pairs when converting Map types
  */
-data class KenvConfig(
+class KenvConfig(
     val fileName: String = ".env",
     val path: String = ".",
     val profile: String? = null,
     val emptyValueStrategy: EmptyValueStrategy = EmptyValueStrategy.DEFAULT,
-    val collectionItemSeparator: String = ",",
-    val mapItemSeparator: String = ";",
-    val mapKeyValueSeparator: String = "=",
-    private val converters: List<ValueConverter>? = null,
+    private val collectionItemSeparator: String = ",",
+    private val mapItemSeparator: String = ";",
+    private val mapKeyValueSeparator: String = "=",
+    converters: List<ValueConverter>? = null,
 ) {
 
     val effectiveConverters: List<ValueConverter>
