@@ -34,5 +34,7 @@ class PrimitiveValueConverter : ValueConverter {
             Boolean::class,
             Char::class,
         )
+
+        val instance = PrimitiveValueConverter()
     }
 }

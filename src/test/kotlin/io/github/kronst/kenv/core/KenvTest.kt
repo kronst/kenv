@@ -49,6 +49,11 @@ class KenvTest {
                 SET_BOOLEAN=true, false, true, true
                 SET_CHAR=a, b, c, a
                 SET_STRING=foo, bar, baz, foo
+                
+                MAP_STRING_INT=key1=42; key2=43; key3=44
+                MAP_STRING_STRING=key1=value1; key2=value2; key3=value3
+                MAP_STRING_LIST_STRING=key1=a, b, c; key2=d, e, f; key3=g, h, i
+                MAP_INT_SET_STRING=1=a, a, b, c; 2=d, e, e, f; 3=g, h, i, i
             """.trimIndent()
         )
 
@@ -81,6 +86,10 @@ class KenvTest {
             @EnvProperty(key = "SET_BOOLEAN") val setBoolean: Set<Boolean>,
             @EnvProperty(key = "SET_CHAR") val setChar: Set<Char>,
             @EnvProperty(key = "SET_STRING") val setString: Set<String>,
+            @EnvProperty(key = "MAP_STRING_INT") val mapStringInt: Map<String, Int>,
+            @EnvProperty(key = "MAP_STRING_STRING") val mapStringString: Map<String, String>,
+            @EnvProperty(key = "MAP_STRING_LIST_STRING") val mapStringListString: Map<String, List<String>>,
+            @EnvProperty(key = "MAP_INT_SET_STRING") val mapIntSetString: Map<Int, Set<String>>,
         )
 
         val config = Kenv.load<Config>(KenvConfig(path = env.parent.toString()))
@@ -114,6 +123,39 @@ class KenvTest {
         assertEquals(setOf(true, false), config.setBoolean)
         assertEquals(setOf('a', 'b', 'c'), config.setChar)
         assertEquals(setOf("foo", "bar", "baz"), config.setString)
+
+        assertEquals(
+            mapOf(
+                "key1" to 42,
+                "key2" to 43,
+                "key3" to 44
+            ),
+            config.mapStringInt
+        )
+        assertEquals(
+            mapOf(
+                "key1" to "value1",
+                "key2" to "value2",
+                "key3" to "value3"
+            ),
+            config.mapStringString
+        )
+        assertEquals(
+            mapOf(
+                "key1" to listOf("a", "b", "c"),
+                "key2" to listOf("d", "e", "f"),
+                "key3" to listOf("g", "h", "i")
+            ),
+            config.mapStringListString
+        )
+        assertEquals(
+            mapOf(
+                1 to setOf("a", "b", "c"),
+                2 to setOf("d", "e", "f"),
+                3 to setOf("g", "h", "i")
+            ),
+            config.mapIntSetString
+        )
     }
 
     @Test

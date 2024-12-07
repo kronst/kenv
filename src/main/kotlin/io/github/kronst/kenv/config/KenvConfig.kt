@@ -1,6 +1,7 @@
 package io.github.kronst.kenv.config
 
 import io.github.kronst.kenv.core.converter.CollectionValueConverter
+import io.github.kronst.kenv.core.converter.MapValueConverter
 import io.github.kronst.kenv.core.converter.PrimitiveValueConverter
 import io.github.kronst.kenv.core.converter.StringValueConverter
 import io.github.kronst.kenv.core.converter.ValueConverter
@@ -39,16 +40,32 @@ data class KenvConfig(
     }
 
     private fun initDefaultConverters(): List<ValueConverter> {
+        val stringConverter = StringValueConverter.instance
+        val primitiveConverter = PrimitiveValueConverter.instance
+
+        val collectionConverter = CollectionValueConverter(
+            converters = listOf(
+                stringConverter,
+                primitiveConverter,
+            ),
+            separator = collectionItemSeparator,
+        )
+
+        val mapConverter = MapValueConverter(
+            converters = listOf(
+                stringConverter,
+                primitiveConverter,
+                collectionConverter,
+            ),
+            itemSeparator = mapItemSeparator,
+            keyValueSeparator = mapKeyValueSeparator,
+        )
+
         return listOf(
-            StringValueConverter(),
-            PrimitiveValueConverter(),
-            CollectionValueConverter(
-                converters = listOf(
-                    StringValueConverter(),
-                    PrimitiveValueConverter(),
-                ),
-                separator = collectionItemSeparator
-            )
+            stringConverter,
+            primitiveConverter,
+            collectionConverter,
+            mapConverter,
         )
     }
 }
