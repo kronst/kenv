@@ -4,8 +4,8 @@ import io.github.kronst.kenv.config.EmptyValueStrategy
 import io.github.kronst.kenv.config.KenvConfig
 import io.github.kronst.kenv.exception.MissingConverterImplementationException
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertInstanceOf
 import org.junit.jupiter.api.Assertions.assertNull
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import kotlin.reflect.full.primaryConstructor
@@ -48,7 +48,7 @@ class ConstructorParameterValueProviderTest {
         val parameter = Dummy::class.primaryConstructor!!.parameters.first()
 
         val value = emptyDefaultProvider.provide(value = "", parameter = parameter)
-        assertInstanceOf(Int::class.javaObjectType, value)
+        assertTrue(value is Int)
         assertEquals(0, value)
     }
 
@@ -85,7 +85,7 @@ class ConstructorParameterValueProviderTest {
 
         val value = emptyDefaultProvider.provide(value = "42", parameter = parameter)
 
-        assertInstanceOf(Int::class.javaObjectType, value)
+        assertTrue(value is Int)
         assertEquals(42, value)
     }
 }

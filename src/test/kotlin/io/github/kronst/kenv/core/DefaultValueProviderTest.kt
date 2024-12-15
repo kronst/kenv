@@ -1,11 +1,11 @@
 package io.github.kronst.kenv.core
 
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertInstanceOf
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
 import kotlin.reflect.KTypeProjection
 import kotlin.reflect.full.createType
+import kotlin.test.assertTrue
 
 class DefaultValueProviderTest {
 
@@ -20,7 +20,7 @@ class DefaultValueProviderTest {
     fun `when type Byte then return 0`() {
         val value = DefaultValueProvider.provide(Byte::class.createType())
 
-        assertInstanceOf(Byte::class.javaObjectType, value)
+        assertTrue(value is Byte)
         assertEquals(0.toByte(), value)
     }
 
@@ -28,7 +28,7 @@ class DefaultValueProviderTest {
     fun `when type Short then return 0`() {
         val value = DefaultValueProvider.provide(Short::class.createType())
 
-        assertInstanceOf(Short::class.javaObjectType, value)
+        assertTrue(value is Short)
         assertEquals(0.toShort(), value)
     }
 
@@ -36,7 +36,7 @@ class DefaultValueProviderTest {
     fun `when type Int then return 0`() {
         val value = DefaultValueProvider.provide(Int::class.createType())
 
-        assertInstanceOf(Int::class.javaObjectType, value)
+        assertTrue(value is Int)
         assertEquals(0, value)
     }
 
@@ -44,7 +44,7 @@ class DefaultValueProviderTest {
     fun `when type Long then return 0`() {
         val value = DefaultValueProvider.provide(Long::class.createType())
 
-        assertInstanceOf(Long::class.javaObjectType, value)
+        assertTrue(value is Long)
         assertEquals(0L, value)
     }
 
@@ -52,7 +52,7 @@ class DefaultValueProviderTest {
     fun `when type Float then return 0`() {
         val value = DefaultValueProvider.provide(Float::class.createType())
 
-        assertInstanceOf(Float::class.javaObjectType, value)
+        assertTrue(value is Float)
         assertEquals(0.0f, value)
     }
 
@@ -60,7 +60,7 @@ class DefaultValueProviderTest {
     fun `when type Double then return 0`() {
         val value = DefaultValueProvider.provide(Double::class.createType())
 
-        assertInstanceOf(Double::class.javaObjectType, value)
+        assertTrue(value is Double)
         assertEquals(0.0, value)
     }
 
@@ -68,7 +68,7 @@ class DefaultValueProviderTest {
     fun `when type Boolean then return false`() {
         val value = DefaultValueProvider.provide(Boolean::class.createType())
 
-        assertInstanceOf(Boolean::class.javaObjectType, value)
+        assertTrue(value is Boolean)
         assertEquals(false, value)
     }
 
@@ -76,7 +76,7 @@ class DefaultValueProviderTest {
     fun `when type Char then return null character`() {
         val value = DefaultValueProvider.provide(Char::class.createType())
 
-        assertInstanceOf(Char::class.javaObjectType, value)
+        assertTrue(value is Char)
         assertEquals('\u0000', value)
     }
 
@@ -84,7 +84,7 @@ class DefaultValueProviderTest {
     fun `when type String then return empty string`() {
         val value = DefaultValueProvider.provide(String::class.createType())
 
-        assertInstanceOf(String::class.java, value)
+        assertTrue(value is String)
         assertEquals("", value)
     }
 
@@ -92,7 +92,7 @@ class DefaultValueProviderTest {
     fun `when type List then return empty list`() {
         val value = DefaultValueProvider.provide(List::class.createType(arguments = listOf(KTypeProjection.STAR)))
 
-        assertInstanceOf(List::class.java, value)
+        assertTrue(value is List<*>)
         assertEquals(emptyList<Nothing>(), value)
     }
 
@@ -100,7 +100,7 @@ class DefaultValueProviderTest {
     fun `when type Set then return empty set`() {
         val value = DefaultValueProvider.provide(Set::class.createType(arguments = listOf(KTypeProjection.STAR)))
 
-        assertInstanceOf(Set::class.java, value)
+        assertTrue(value is Set<*>)
         assertEquals(emptySet<Nothing>(), value)
     }
 
@@ -115,7 +115,7 @@ class DefaultValueProviderTest {
             )
         )
 
-        assertInstanceOf(Map::class.java, value)
+        assertTrue(value is Map<*, *>)
         assertEquals(emptyMap<Nothing, Nothing>(), value)
     }
 }

@@ -1,7 +1,6 @@
 package io.github.kronst.kenv.core.converter
 
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertInstanceOf
 import org.junit.jupiter.api.Test
 import kotlin.reflect.KTypeProjection
 import kotlin.reflect.full.createType
@@ -25,7 +24,6 @@ class CollectionValueConverterTest {
             "42, 43, 44",
             List::class.createType(arguments = listOf(KTypeProjection.invariant(Byte::class.createType())))
         )
-        assertInstanceOf(List::class.java, listByte)
         assertEquals(3, (listByte as List<Byte>).size)
         assertEquals(listOf<Byte>(42, 43, 44), listByte)
 
@@ -33,7 +31,6 @@ class CollectionValueConverterTest {
             "42, 43, 44, 42",
             Set::class.createType(arguments = listOf(KTypeProjection.invariant(Byte::class.createType())))
         )
-        assertInstanceOf(Set::class.java, setByte)
         assertEquals(3, (setByte as Set<Byte>).size)
         assertEquals(setOf<Byte>(42, 43, 44), setByte)
     }
@@ -44,7 +41,6 @@ class CollectionValueConverterTest {
             "42, 43, 44",
             List::class.createType(arguments = listOf(KTypeProjection.invariant(Short::class.createType())))
         )
-        assertInstanceOf(List::class.java, listShort)
         assertEquals(3, (listShort as List<Short>).size)
         assertEquals(listOf<Short>(42, 43, 44), listShort)
 
@@ -52,7 +48,6 @@ class CollectionValueConverterTest {
             "42, 43, 44, 42",
             Set::class.createType(arguments = listOf(KTypeProjection.invariant(Short::class.createType())))
         )
-        assertInstanceOf(Set::class.java, setShort)
         assertEquals(3, (setShort as Set<Short>).size)
         assertEquals(setOf<Short>(42, 43, 44), setShort)
     }
@@ -63,7 +58,6 @@ class CollectionValueConverterTest {
             "42, 43, 44",
             List::class.createType(arguments = listOf(KTypeProjection.invariant(Int::class.createType())))
         )
-        assertInstanceOf(List::class.java, listInt)
         assertEquals(3, (listInt as List<Int>).size)
         assertEquals(listOf(42, 43, 44), listInt)
 
@@ -71,7 +65,6 @@ class CollectionValueConverterTest {
             "42, 43, 44, 42",
             Set::class.createType(arguments = listOf(KTypeProjection.invariant(Int::class.createType())))
         )
-        assertInstanceOf(Set::class.java, setInt)
         assertEquals(3, (setInt as Set<Int>).size)
         assertEquals(setOf(42, 43, 44), setInt)
     }
@@ -82,7 +75,6 @@ class CollectionValueConverterTest {
             "42, 43, 44",
             List::class.createType(arguments = listOf(KTypeProjection.invariant(Long::class.createType())))
         )
-        assertInstanceOf(List::class.java, listLong)
         assertEquals(3, (listLong as List<Long>).size)
         assertEquals(listOf(42L, 43L, 44L), listLong)
 
@@ -90,7 +82,6 @@ class CollectionValueConverterTest {
             "42, 43, 44, 42",
             Set::class.createType(arguments = listOf(KTypeProjection.invariant(Long::class.createType())))
         )
-        assertInstanceOf(Set::class.java, setLong)
         assertEquals(3, (setLong as Set<Long>).size)
         assertEquals(setOf(42L, 43L, 44L), setLong)
     }
@@ -101,7 +92,6 @@ class CollectionValueConverterTest {
             "42.0, 43.0, 44.0",
             List::class.createType(arguments = listOf(KTypeProjection.invariant(Float::class.createType())))
         )
-        assertInstanceOf(List::class.java, listFloat)
         assertEquals(3, (listFloat as List<Float>).size)
         assertEquals(listOf(42.0f, 43.0f, 44.0f), listFloat)
 
@@ -109,7 +99,6 @@ class CollectionValueConverterTest {
             "42.0, 43.0, 44.0, 42.0",
             Set::class.createType(arguments = listOf(KTypeProjection.invariant(Float::class.createType())))
         )
-        assertInstanceOf(Set::class.java, setFloat)
         assertEquals(3, (setFloat as Set<Float>).size)
         assertEquals(setOf(42.0f, 43.0f, 44.0f), setFloat)
     }
@@ -120,7 +109,6 @@ class CollectionValueConverterTest {
             "42.0, 43.0, 44.0",
             List::class.createType(arguments = listOf(KTypeProjection.invariant(Double::class.createType())))
         )
-        assertInstanceOf(List::class.java, listDouble)
         assertEquals(3, (listDouble as List<Double>).size)
         assertEquals(listOf(42.0, 43.0, 44.0), listDouble)
 
@@ -128,7 +116,6 @@ class CollectionValueConverterTest {
             "42.0, 43.0, 44.0, 42.0",
             Set::class.createType(arguments = listOf(KTypeProjection.invariant(Double::class.createType())))
         )
-        assertInstanceOf(Set::class.java, setDouble)
         assertEquals(3, (setDouble as Set<Double>).size)
         assertEquals(setOf(42.0, 43.0, 44.0), setDouble)
     }
@@ -139,7 +126,6 @@ class CollectionValueConverterTest {
             "true, false, true",
             List::class.createType(arguments = listOf(KTypeProjection.invariant(Boolean::class.createType())))
         )
-        assertInstanceOf(List::class.java, listBoolean)
         assertEquals(3, (listBoolean as List<Boolean>).size)
         assertEquals(listOf(true, false, true), listBoolean)
 
@@ -147,7 +133,6 @@ class CollectionValueConverterTest {
             "true, false, true, true",
             Set::class.createType(arguments = listOf(KTypeProjection.invariant(Boolean::class.createType())))
         )
-        assertInstanceOf(Set::class.java, setBoolean)
         assertEquals(2, (setBoolean as Set<Boolean>).size)
         assertEquals(setOf(true, false), setBoolean)
     }
@@ -158,7 +143,6 @@ class CollectionValueConverterTest {
             "a, b, c",
             List::class.createType(arguments = listOf(KTypeProjection.invariant(Char::class.createType())))
         )
-        assertInstanceOf(List::class.java, listChar)
         assertEquals(3, (listChar as List<Char>).size)
         assertEquals(listOf('a', 'b', 'c'), listChar)
 
@@ -166,7 +150,6 @@ class CollectionValueConverterTest {
             "a, b, c, a",
             Set::class.createType(arguments = listOf(KTypeProjection.invariant(Char::class.createType())))
         )
-        assertInstanceOf(Set::class.java, setChar)
         assertEquals(3, (setChar as Set<Char>).size)
         assertEquals(setOf('a', 'b', 'c'), setChar)
     }
@@ -177,7 +160,6 @@ class CollectionValueConverterTest {
             "a, b, c",
             List::class.createType(arguments = listOf(KTypeProjection.invariant(String::class.createType())))
         )
-        assertInstanceOf(List::class.java, listString)
         assertEquals(3, (listString as List<String>).size)
         assertEquals(listOf("a", "b", "c"), listString)
 
@@ -185,7 +167,6 @@ class CollectionValueConverterTest {
             "a, b, c, a",
             Set::class.createType(arguments = listOf(KTypeProjection.invariant(String::class.createType())))
         )
-        assertInstanceOf(Set::class.java, setString)
         assertEquals(3, (setString as Set<String>).size)
         assertEquals(setOf("a", "b", "c"), setString)
     }
