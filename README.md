@@ -17,7 +17,7 @@ Type-safe environment variables configuration library for Kotlin.
 
 ```kotlin
 dependencies {
-    implementation("io.github.kronst:kenv:0.1.0")
+    implementation("io.github.kronst:kenv:1.0.0")
 }
 ```
 
